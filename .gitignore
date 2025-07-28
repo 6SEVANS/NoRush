@@ -1,0 +1,24 @@
+#OS files
+.DS_Store
+Thumbs.db
+
+#VS Settings
+.vscode/
+.idea/
+
+#Logs
+*.logs 
+logs/
+
+#Environment files
+.env 
+
+#Node modules
+node_modules/ 
+
+#Expo cache
+.expo/
+.expo-shared/
+
+#MacOS file metadata
+*.swp
