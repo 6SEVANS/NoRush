@@ -1,0 +1,8 @@
+1.call the previously defined 
+database connection.
+
+2.Implement the logic for each function
+in terms of the interaction with the database.
+e.g. Code in the SQL.
+
+3. Export the model.
