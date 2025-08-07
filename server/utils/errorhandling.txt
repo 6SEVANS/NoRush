@@ -1,4 +1,0 @@
-Handles all errors.
-Can create a class in this directory to handle errors
-and provide custom responses to the errors.
-Good practice but not something compulsory.

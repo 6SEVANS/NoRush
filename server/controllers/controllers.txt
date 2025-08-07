@@ -1,6 +1,0 @@
-1.Import the corresponding model.
-
-2.Define each function and implement the logic.
-2.1 Make sure to include error catching.
-
-3.Export the controller.
