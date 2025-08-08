@@ -14,6 +14,6 @@ try {
         connectionLimit: process.env.DB_CONNECTION_LIMIT
     });
 } catch(error){
-    console.error("Error connecting to Database: "+ error);
+    console.error("Error connecting to Database: " + error);
 }
 module.exports = pool;
