@@ -1,8 +1,0 @@
-1.Define express and define router.
-
-2.Define commands from controller
-by importing the functions from controller.
-
-3.Declare each function with its route and function.
-
-4.Export the router.
