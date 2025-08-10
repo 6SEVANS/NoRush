@@ -16,7 +16,6 @@ const getAllUsers = async () => {
         .query('SELECT * FROM users');
         return results[0];
     } catch (error) {
-        console.error("Unable to fetch all users: " + error);
         throw error;
     }
 }
@@ -31,10 +30,9 @@ const getUserByID = async (id) => {
     try {
         let result = await pool
         .promise()
-        .query('SELECT * FROM users WHERE UserID = ' + pool.escape(id));
+        .query('SELECT * FROM users WHERE UserID = ?', id);
         return result[0];
     } catch (error) {
-        console.error("Unable to fetch User by ID: " + error);
         throw error;
     }
 }
@@ -51,10 +49,10 @@ const createUser = async (displayName, emailAddress, passKey) => {
     try {
         let result = await pool 
         .promise()
-        .query('INSERT into users (DisplayName, EmailAddress, Passkey) VALUES ' + '(' + pool.escape(displayName) + ',' + pool.escape(emailAddress) + ',' + pool.escape(passKey) + ')');
+        .query('INSERT into users (DisplayName, EmailAddress, Passkey) VALUES ' + '( ?  , ? , ?)', 
+        [displayName, emailAddress, passKey]);
         return result[0];
     } catch (error) {
-        console.error("Unable to create new user: " + error);
         throw error;
     }
 }
@@ -72,10 +70,10 @@ const updateUserByID = async(displayName,emailAddress,passKey,id) => {
     try {
         let result = await pool 
         .promise()
-        .query('UPDATE users SET DisplayName = ' + pool.escape(displayName) + ', EmailAddress = ' + pool.escape(emailAddress) + ', Passkey = ' + pool.escape(passKey) + 'WHERE UserID = ' + pool.escape(id));
+        .query('UPDATE users SET DisplayName =  ?, EmailAddress = ?, Passkey = ? WHERE UserID = ?',
+        [displayName, emailAddress, passKey, id]);
         return result[0];
     } catch (error) {
-        console.error("Unable to update existing user: " + error);
         throw error;
     }
 }
@@ -90,13 +88,11 @@ const deleteUserByID = async(id) => {
     try {
         let result = await pool
         .promise()
-        .query('DELETE FROM users WHERE UserID = ' + pool.escape(id));
+        .query('DELETE FROM users WHERE UserID = ?', id);
         return result[0];
     } catch (error) {
-        console.error("Unable to delete user by ID: " + error);
         throw error;
     }
 }
-
 module.exports = {
     getAllUsers, getUserByID, createUser, updateUserByID, deleteUserByID };
