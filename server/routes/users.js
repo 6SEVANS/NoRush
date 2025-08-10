@@ -7,7 +7,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
-// CRUD implementation.
+//CRUD implementation in relation to Users.
 router.get('/', userController.getAllUsers);
 router.get('/:UserID', userController.getUserByID);
 router.post('/', userController.createUser);

@@ -9,6 +9,9 @@ const cors = require('cors');
 require('dotenv').config({ path: __dirname + '/config/.env'});
 const port = process.env.PORT;
 
+//Import custom error handling. 
+const errorMiddleware = require('./middleware/errorMiddleware');
+
 //Set up and configure the app.
 const app = express();
 app.use(cors());
@@ -24,4 +27,6 @@ app.listen(port, (error) => {
     }
     return console.log('NoRush listening on port ' + port);
 });
+
+app.use(errorMiddleware);
 module.exports = app;
