@@ -3,6 +3,8 @@
  * Contains logic for queries to the database in relation to the users table.
  */
 const pool = require('../config/database');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 /**
  * Fetches all users from the database.
@@ -38,6 +40,42 @@ const getUserByID = async (id) => {
 }
 
 /**
+ * Fetches a single user by their name.
+ * @param {*} displayName 
+ * @returns The details of the user searched by Name, or an error.
+ */
+const getUserByName = async (displayName) => {
+    console.log("Get user by display name.");
+    try {
+        let result = await pool
+        .promise()
+        .query('SELECT * FROM users WHERE DisplayName = ?', displayName);
+        return result[0];
+    } catch (error) {
+        throw error;
+    }
+}
+
+/**
+ * Fetches a single user by their email address.
+ * @param {*} emailAddress 
+ * @returns The details of the user searched by Address, or an error.
+ */
+const getUserByEmail = async (emailAddress) => {
+    console.log("Get user by email address.");
+    try {
+        const cleanedEmail = emailAddress.trim().toLowerCase();
+
+        let result = await pool
+        .promise()
+        .query('SELECT * FROM users WHERE emailaddress = ?', [cleanedEmail]);
+        return result[0][0];
+    } catch (error) {
+        throw error;
+    }
+}
+
+/**
  * Inserts a new user into the database.
  * @param {*} displayName Chosen name of the user.
  * @param {*} emailAddress Email address of the user.
@@ -47,10 +85,13 @@ const getUserByID = async (id) => {
 const createUser = async (displayName, emailAddress, passKey) => {
     console.log("Create new user query.");
     try {
+        //Hash user password before inserting into database.
+        const hashedPassKey = await bcrypt.hash(passKey, saltRounds);
+
         let result = await pool 
         .promise()
         .query('INSERT into users (DisplayName, EmailAddress, Passkey) VALUES ' + '( ?  , ? , ?)', 
-        [displayName, emailAddress, passKey]);
+        [displayName, emailAddress, hashedPassKey]);
         return result[0];
     } catch (error) {
         throw error;
@@ -95,4 +136,4 @@ const deleteUserByID = async(id) => {
     }
 }
 module.exports = {
-    getAllUsers, getUserByID, createUser, updateUserByID, deleteUserByID };
+    getAllUsers, getUserByID, createUser, updateUserByID, deleteUserByID, getUserByName, getUserByEmail };

@@ -21,6 +21,10 @@ app.use(express.json());
 const v1UserRoutes = require('./routes/users');
 app.use('/api/v1/users', v1UserRoutes);
 
+//Declare and use routes relating to Auth.
+const v1AuthRoutes = require('./routes/auth');
+app.use('/api/v1/auth', v1AuthRoutes);
+
 app.listen(port, (error) => {
     if(error){
         return console.error(error);

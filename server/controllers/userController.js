@@ -8,13 +8,13 @@ const asyncHandler = require('../middleware/catchAsyncErrors');
 
 /**
  * Gets all users in the database.
- * @param {*} req 
+ * @param {*} req All users in the database.
  * @param {*} res Result of the request.
  */
 const getAllUsers = asyncHandler(async (req, res, next) => {
     const users = await userModel.getAllUsers();
     res.status(200).json(users);
-})
+});
 
 /**
  * Controller for retrieving a user in the database by ID.
@@ -26,6 +26,32 @@ const getUserByID = asyncHandler(async (req, res, next) => {
     if(!user || user.length === 0){
         return next(new CustomError(404, 'User not found.'));
     } 
+    res.status(200).json(user);
+});
+
+/**
+ * Controller for retrieving a user in the database by DisplayName.
+ * @param {*} req The DisplayName of the user.
+ * @param {*} res Result of the request.
+ */
+const getUserByName = asyncHandler(async (req, res, next) => {
+    const user = await userModel.getUserByName(req.params.DisplayName);
+    if(!user || user.length === 0){
+        return next(new CustomError(404, 'User not found'));
+    }
+    res.status(200).json(user);
+});
+
+/**
+ * Controller for retrieving a user in the database by EmailAddress.
+ * @param {*} req the EmailAddress of the user.
+ * @param {*} res Result of the request.
+ */
+const getUserByEmail = asyncHandler(async (req, res, next) => {
+    const user = await userModel.getUserByEmail(req.query.address);
+    if(!user || user.length === 0){
+        return next(new CustomError(404, 'Email not found'));
+    }
     res.status(200).json(user);
 });
 
@@ -61,4 +87,4 @@ const deleteUserByID = asyncHandler(async (req, res, next) => {
     const deletedUser = await userModel.deleteUserByID(req.params.UserID);
     res.status(200).json(deletedUser);
 });
-module.exports = { getAllUsers, getUserByID, createUser, updateUserByID, deleteUserByID };
+module.exports = { getAllUsers, getUserByID, createUser, updateUserByID, deleteUserByID, getUserByName, getUserByEmail };

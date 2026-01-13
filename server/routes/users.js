@@ -9,8 +9,9 @@ const userController = require('../controllers/userController');
 
 //CRUD implementation in relation to Users.
 router.get('/', userController.getAllUsers);
-router.get('/:UserID', userController.getUserByID);
 router.post('/', userController.createUser);
+router.get('/email', userController.getUserByEmail);
+router.get('/:UserID', userController.getUserByID);
 router.put('/update/:UserID', userController.updateUserByID);
 router.delete('/delete/:UserID', userController.deleteUserByID);
 
