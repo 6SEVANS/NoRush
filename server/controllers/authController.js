@@ -67,6 +67,15 @@ const registerUser = asyncHandler(async (req, res, next) => {
     res.status(201).json({message: 'Registered Successfully.', token});
 });
 
+/**
+ * Logouts the user by invalidating the JWT.
+ * @param {*} req
+ * @param {*} res
+ */
+const logoutUser = asyncHandler(async (req, res, next) => {
+
+});
+
 module.exports = {loginUser, registerUser};
 
 //authController.js will contain the code for:
